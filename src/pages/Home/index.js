@@ -13,7 +13,13 @@ import { useData } from "../../contexts/DataContext";
 import "./style.scss";
 
 const Page = () => {
-  const { last } = useData();
+  // Récupération des données
+  const { data } = useData();
+  // Trier les données pour récupérer le dernier évènement
+  const last = data?.events.sort(
+    (evtA, evtB) => new Date(evtB.date) - new Date(evtA.date)
+  )[0];
+
   return (
     <>
       <header>
@@ -116,13 +122,17 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
-          <EventCard
-            imageSrc={last?.cover}
-            title={last?.title}
-            date={new Date(last?.date)}
-            small
-            label="boom"
-          />
+          {/* Récupérer données, si données existantes pour restituer le composant */}
+          {last && (
+            <EventCard
+              imageSrc={last?.cover}
+              title={last?.title}
+              date={new Date(last?.date)}
+              small
+              label={last?.type}
+              data-testid="last-event"
+            />
+          )}
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>
