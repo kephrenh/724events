@@ -68,7 +68,7 @@ const Page = () => {
         <section className="PeoplesContainer" id="notre-equipe">
           <h2 className="Title">Notre équipe</h2>
           <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
-          <div className="ListContainer">
+          <div className="ListContainer" data-testid="list-team">
             <PeopleCard
               imageSrc="/images/stephanie-liverani-Zz5LQe-VSMY-unsplash.png"
               name="Samira"
@@ -112,14 +112,15 @@ const Page = () => {
                   les plus brefs délais
                 </p>
               </div>
-            }>
+            }
+          >
             {({ setIsOpened }) => (
               <Form onSuccess={() => setIsOpened(true)} onError={() => null} />
             )}
           </Modal>
         </div>
       </main>
-      <footer className="row">
+      <footer className="row" data-testid="footer">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
           {/* Récupérer données, si données existantes pour restituer le composant */}
