@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Home from "./index";
 
 describe("When Form is created", () => {
@@ -21,24 +21,39 @@ describe("When Form is created", () => {
         })
       );
       await screen.findByText("En cours");
-      await screen.findByText("Message envoyé !");
+      await waitFor(() => screen.findByText("Message envoyé !"), {
+        timeout: 2000,
+      });
     });
   });
-
 });
 
-
 describe("When a page is created", () => {
-  it("a list of events is displayed", () => {
-    // to implement
-  })
+  it("a list of events is displayed", async () => {
+    render(<Home />);
+    expect(screen.getByTestId("list-events")).toBeInTheDocument();
+
+    waitFor(() => {
+      expect(screen.getByText("MixUsers"));
+    });
+  });
   it("a list a people is displayed", () => {
-    // to implement
-  })
+    render(<Home />);
+    // Section "Notre équipe" affichéé
+    expect(screen.getByTestId("list-team"));
+    // Textes "Samira" et "CEO" à l'écran
+    expect(screen.getByText("Samira")).toBeInTheDocument();
+    expect(screen.getByText("CEO")).toBeInTheDocument();
+  });
   it("a footer is displayed", () => {
-    // to implement
-  })
-  it("an event card, with the last event, is displayed", () => {
-    // to implement
-  })
+    render(<Home />);
+    expect(screen.getByTestId("footer")).toBeInTheDocument();
+    expect(screen.getByText("contact@724events.com"));
+  });
+  it("an event card, with the last event, is displayed", async () => {
+    render(<Home />);
+    waitFor(() => {
+      expect(screen.getByTestId("last-event")).toBeInTheDocument();
+    });
+  });
 });
